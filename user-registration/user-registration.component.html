@@ -1,0 +1,156 @@
+<div class='bg-image'>
+</div>
+<div class="main">
+
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content" id="error_div">
+                <h2 class="form-title">Create account</h2>
+                <div>
+                    <div class="alert alert-danger" *ngIf="errors.length > 0">
+                        <a class="close" aria-label="close" (click)="resetError()">&times;</a>
+                        <ul *ngFor="let err of errors">
+                            <li>{{err}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="firstname" id="First name" placeholder="First Name *" maxlength="80" [formControl]="registartionForm.controls['firstName']" [(ngModel)]="userRegistrationDetail.firstName" />
+                        <small class="color-red" *ngIf="registartionForm.controls['firstName'].hasError('required') && registartionForm.controls['firstName'].touched">{{utilService.validationService.FRIST_NAME_IS_REQUIRD}}</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="lastname" id="Lastname" placeholder="Last Name *" maxlength="80" [formControl]="registartionForm.controls['lastName']" [(ngModel)]="userRegistrationDetail.lastName" />
+                        <small class="color-red" *ngIf="registartionForm.controls['lastName'].hasError('required') && registartionForm.controls['lastName'].touched">{{utilService.validationService.LAST_NAME_IS_REQUIRD}}</small>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="email" class="form-input" name="email" id="email" placeholder="Email *" maxlength="80" [(ngModel)]="userRegistrationDetail.email" [formControl]="registartionForm.controls['email']" />
+                        <small class="color-red" *ngIf="registartionForm.controls['email'].hasError('required') && registartionForm.controls['email'].touched">{{utilService.validationService.EMAIL_IS_REQUIRD}}</small>
+                        <small class="color-red" *ngIf="!registartionForm.controls['email'].hasError('required') && !registartionForm.controls['email'].valid && registartionForm.controls['email'].touched">{{utilService.validationService.VALID_EMAIL}}</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="mobile" id="mobile" placeholder="Tel/Mobile *" maxlength="10" [(ngModel)]="userRegistrationDetail.mobileNo" [formControl]="registartionForm.controls['mobileNo']" />
+                        <small class="color-red" *ngIf="registartionForm.controls['mobileNo'].hasError('required') && registartionForm.controls['mobileNo'].touched">{{utilService.validationService.MOBILE_NO_IS_REQUIRD}}</small>
+                        <small class="color-red" *ngIf="!registartionForm.controls['mobileNo'].hasError('required') && !registartionForm.controls['mobileNo'].valid && registartionForm.controls['mobileNo'].touched">{{utilService.validationService.VALID_MOBILE_NO}}</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <!-- <label class="control-label lbl_text">MTR Account Manager : </label> -->
+                        <!-- <select class="form-input" [formControl]="registartionForm.controls['mtrAccountManager']" [(ngModel)]="userRegistrationDetail.mtrAccountManager">
+                            <option>test</option>
+                            <option>test</option>
+                        </select> -->
+                        <ng-select class="form-control1" [items]="mtrAccountManager" bindLabel="managerName" bindValue="id" placeholder="Select account manager *" [formControl]="registartionForm.controls['mtrAccountManager']" [(ngModel)]="userRegistrationDetail.idOfAccountManager">
+                        </ng-select>
+                        <small class="color-red" *ngIf="registartionForm.controls['mtrAccountManager'].hasError('required') && registartionForm.controls['mtrAccountManager'].touched">{{utilService.validationService.MTR_MANAGER_IS_REQUIRD}}</small>
+                    </div>
+                </div>
+
+                <h5 class="reg_sub_heading">COMPANY INFORMATION</h5>
+                <div class="row">
+                    <div class="form-group col-md-6">
+
+                        <ng-select class="form-control1" [items]="companyType" bindLabel="name" bindValue="name" placeholder="Select Company Type *" [formControl]="registartionForm.controls['companyType']" [(ngModel)]="userRegistrationDetail.companyType">
+
+                        </ng-select>
+                        <small class="color-red" *ngIf="registartionForm.controls['companyType'].hasError('required') && registartionForm.controls['companyType'].touched">{{utilService.validationService.COMPANY_TYPE_IS_REQUIRD}}</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <!-- <label class="control-label"></label> -->
+                        <input type="text" class="form-input" name="company" id="company" placeholder="Company *" maxlength="100" [formControl]="registartionForm.controls['company']" [(ngModel)]="userRegistrationDetail.companyName" />
+                        <small class="color-red" *ngIf="registartionForm.controls['company'].hasError('required') && registartionForm.controls['company'].touched">{{utilService.validationService.COMPANY_NAME_IS_REQUIRD}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+
+                        <ng-select class="form-control1" [items]="countryList" bindLabel="name" bindValue="name" placeholder="Select Country *" [formControl]="registartionForm.controls['country']" [(ngModel)]="userRegistrationDetail.country">
+
+                        </ng-select>
+                        <small class="color-red" *ngIf="registartionForm.controls['country'].hasError('required') && registartionForm.controls['country'].touched">{{utilService.validationService.COUNTRY_IS_REQUIRD}}</small>
+                    </div>
+                    <!-- <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="currency" id="currency" placeholder="Currency" [(ngModel)]="userRegistrationDetail.currency" disabled />
+                    </div> -->
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="regno" id="regno" placeholder="Registration Number * " [(ngModel)]="userRegistrationDetail.registartionNumber" [formControl]="registartionForm.controls['registrationNo']" />
+                        <small class="color-red" *ngIf="registartionForm.controls['registrationNo'].hasError('required') && registartionForm.controls['registrationNo'].touched">{{utilService.validationService.REGSITRATION_NO_REQUIRED}}</small>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-input" name="vatnumber" id="vatnumber" placeholder="VAT Number * " [(ngModel)]="userRegistrationDetail.VATNumber" [formControl]="registartionForm.controls['vatNo']" />
+                        <small class="color-red" *ngIf="registartionForm.controls['vatNo'].hasError('required') && registartionForm.controls['vatNo'].touched">{{utilService.validationService.VAT_NO_REQUIRED}}</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-input" placeholder="Company Address *" [formControl]="registartionForm.controls['companyAddress']" [(ngModel)]="userRegistrationDetail.companyAddress"></textarea>
+                    <small class="color-red" *ngIf="registartionForm.controls['companyAddress'].hasError('required') && registartionForm.controls['companyAddress'].touched">{{utilService.validationService.COMPANY_ADDRESS_IS_REQUIRD}}</small>
+                </div>
+
+                <h5 class="reg_sub_heading">COMPANY DOCUMENTS</h5>
+                <div class="template-demo table-responsive" *ngIf="listOfFilenNames.length > 0">
+                    <table class="table stocklist_tbl_reg">
+                        <thead>
+                            <tr class="stocklist_row">
+                                <th class="col-md-9">File Information</th>
+                                <th class="col-md-3">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody class="stocklist_data">
+
+                            <tr *ngFor="let file of listOfFilenNames;let i = index">
+
+                                <td class="text-left">
+                                    <i class="fa fa-file"></i>
+                                    <span class="mleft_20"> {{file}}</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary" (click)="removeFile(i)">
+                                        <i class="fa fa-times"></i>   Remove</button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="listOfFilenNames.length == 0">
+                                <td colspan="3">
+                                    No Files Found.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="reg_instruction">Please upload your Company Registration and VAT Registration documents here</p>
+
+                <div class="form-group m_top_20">
+                    <input type="file" class="form-input" multiple name="filedoc" id="filedoc" #attachmentImg (change)="selectFile($event)" />
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="agree-term" id="agree-term" class="mdc-checkbox agree-term" (click)="iAgreeWithTearms()" />
+                    <label for="agree-term" class="label-agree-term">
+                            <span class="mleft_20">
+                                <span></span>
+                            I agree all statements in
+                            <a class="term-service">Terms of service</a>
+                            </span>
+                        </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="submit" id="submit" class="form-submit btn_register" value="Sign up" (click)="userRegistration()" [disabled]="!registartionForm.valid" />
+                </div>
+
+
+                <p class="loginhere">
+                    Already have an account ?
+                    <a [routerLink]="['/home/work_area/login']" class="loginhere-link">Login Here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+</div>

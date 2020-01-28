@@ -1,0 +1,138 @@
+<div class="body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <aside class="mdc-persistent-drawer mdc-persistent-drawer--open">
+        <nav class="mdc-persistent-drawer__drawer">
+            <div class="admin_sidemenu_header">
+                <a [routerLink]="['/home/work_area/user/dashboard']" class="user_logo">
+                    <img src="{{utilService.SITE_LOGO}}" alt="Not Found"></a>
+            </div>
+            <div class="mdc-list-group">
+                <nav class="mdc-list mdc-drawer-menu admin_sidemenu">
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/widget']" title="Dashboard">
+                            <!-- <div class="admin-title">Dashboard</div> -->
+                            <i class="fa fa-dashboard mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Dashboard" data-toggle="tooltip" data-placement="right"></i> Dashboard
+                        </a>
+                    </div>
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/user-list']">
+                            <i class="fa fa-user mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="User List" data-toggle="tooltip" data-placement="right"></i> User List
+                        </a>
+                    </div>
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/account-manager']">
+                            <i class="fa fa-table mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Account Manager" data-toggle="tooltip" data-placement="right"></i> Account Manager
+                        </a>
+                    </div>
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/offer-stock']">
+                            <i class="fa fa-file mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Stock Request" data-toggle="tooltip" data-placement="right"></i> Stock Request
+                        </a>
+                    </div>
+
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/mail-template']">
+                            <i class="fa fa-envelope mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Email Template" data-toggle="tooltip" data-placement="right"></i> Email Template
+                        </a>
+                    </div>
+                    <!-- <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/contact-us']">
+                            <i class="fa fa-phone mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Contact Us" data-toggle="tooltip" data-placement="right"></i> Contact Us
+                        </a>
+                    </div> -->
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" routerLinkActive="active" [routerLink]="['/home/work_area/admin/dashboard/settings']">
+                            <i class="fa fa-cogs mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Site Settings" data-toggle="tooltip" data-placement="right"></i> Site Settings
+                        </a>
+                    </div>
+                    <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" (click)="logout()">
+                            <i class="fa fa-download mdc-list-item__start-detail dashboard_icons" aria-hidden="true" title="Logout" data-toggle="tooltip" data-placement="right"></i> Logout
+                        </a>
+                    </div>
+                    <!--    <div class="mdc-list-item mdc-drawer-item purchase-link">
+              <a href="https://www.bootstrapdash.com/product/material-admin/" target="_blank" class="mdc-button mdc-button--raised mdc-button--dense mdc-drawer-link" data-mdc-auto-init="MDCRipple">
+                Upgrade To Pro
+              </a>
+            </div> -->
+                </nav>
+            </div>
+        </nav>
+    </aside>
+    <!-- partial -->
+    <!-- partial:partials/_navbar.html -->
+    <header class="mdc-toolbar mdc-elevation--z4 mdc-toolbar--fixed ">
+        <div class="mdc-toolbar__row">
+            <!--  <div class="admin_sidemenu_head_2">
+                
+            </div> -->
+
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+
+                <a [routerLink]="['/home/work_area/user/dashboard']" class="admin_logo">
+                    <img src="{{utilService.SITE_LOGO}}" alt=".././../../../assets/images/logo_mtr.jpg">
+                </a>
+                <a class="menu-toggler mdc-toolbar__menu-icon left_menu_open">
+                    <i class="fa fa-bars white_icon"></i>
+                </a>
+                <!--  <span class="mdc-toolbar__input">
+          <div class="mdc-text-field">
+            <input type="text" class="mdc-text-field__input" id="css-only-text-field-box" placeholder="Search anything...">
+          </div>
+        </span> -->
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+                <!--  <div class="mdc-menu-anchor dropdown">
+          <a class="mdc-toolbar__icon toggle  dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bell"></i>
+            <span class="dropdown-count">3</span>
+          </a>
+          <div class="dropdown-menu" tabindex="-1" id="notification-menu">
+            <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+              <li class="mdc-list-item" role="menuitem" tabindex="0">
+                <i class="material-icons mdc-theme--primary mr-1">email</i>
+                One unread message
+              </li>
+              <li class="mdc-list-item" role="menuitem" tabindex="0">
+                <i class="material-icons mdc-theme--primary mr-1">group</i>
+                One event coming up
+              </li>
+              <li class="mdc-list-item" role="menuitem" tabindex="0">
+                <i class="material-icons mdc-theme--primary mr-1">cake</i>
+                It's Aleena's birthday!
+              </li>
+            </ul>
+          </div>
+        </div> -->
+                <!--  <div class="mdc-menu-anchor">
+          <a href="#" class="mdc-toolbar__icon mdc-ripple-surface" data-mdc-auto-init="MDCRipple">
+            <i class="fa fa-th-large"></i>
+          </a>
+        </div> -->
+                <div class="mdc-menu-anchor dropdown" data-toggle="dropdown">
+                    <a class="mdc-toolbar__icon toggle dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-ellipsis-v white_icon"></i>
+                    </a>
+                    <div class="dropdown-menu" style="left:-130px">
+                        <!-- class="mdc-simple-menu__items mdc-list" -->
+                        <ul class="submenu-ul">
+                            <li [routerLink]="['/home/work_area/admin/dashboard/settings']">
+                                <i class="fa fa-cog"></i>
+                                <a>Settings</a>
+                            </li>
+                            <li (click)="logout()">
+                                <i class="fa fa-download"></i>
+                                <a>Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </header>
+    <div class="page-wrapper mdc-toolbar-fixed-adjust">
+        <main class="content-wrapper admin-wrapper">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

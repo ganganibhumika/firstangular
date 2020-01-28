@@ -1,0 +1,53 @@
+<div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
+            </div>
+            <div class="mdc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-8-desktop
+            mdc-layout-grid__cell--span-12-tablet">
+        <section class=" col-md-12 title_sec">
+          <h1 class="mdc-card__title  col-md-12">Stock List </h1>
+        </section>
+        <div class="template-demo user_left_tbl table-responsive">
+          <table class="table table-striped user_tbls stocklist_tbl">
+            <thead class="stock_table">
+              <tr>
+                <th>Stock Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class="stocklist_data">
+              <tr 
+              (click)="routeForNextPage(enumForStock.GRADE)">
+                        <td>
+                          <div class="icon_list">
+                          <i class="fa fa-mobile"></i>
+                          <i class="fa fa-laptop"></i>
+                        </div>
+                       Grades Devices-Marginal VAT:Mobile devices </td>
+                        <td>Mobile Phones and tablets-Grade A,B,C - MARGINAL</td>
+                      </tr>
+                      <tr (click)="routeForNextPage(enumForStock.FAULTY)">
+                        <td>
+                          <div class="icon_list">
+                          <i class="fa fa-mobile"></i>
+                          <i class="fa fa-laptop"></i>
+                        </div>
+                        Grades Devices-Standard VAT:Mobile devices </td>
+                        <td>Available X faulty stock list</td>
+                      </tr>
+                       <!-- <tr [routerLink]="['/home/work_area/user/dashboard/stock-detail-view']">
+                        <td>
+                          <div class="icon_list">
+                          <i class="fa fa-mobile"></i>
+                          <i class="fa fa-laptop"></i>
+                        </div>
+                        Stock list item 1 </td>
+                        <td>stock list detail 1 </td>
+                      </tr> -->
+            </tbody>
+          </table>
+        </div>
+            </div>
+            </div>
+            </div> 
+                   

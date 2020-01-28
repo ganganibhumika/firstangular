@@ -1,0 +1,119 @@
+<div class="mdc-layout-grid">
+
+    <div class="mdc-card">
+        <!-- <section class="mdc-card__primary col-md-12">
+            <h1 class="mdc-card__title mdc-card__title--large col-md-6">Offer List Detail View</h1>
+        </section> -->
+        <div class="row mdc-card__account">
+            <div class="col-md-12 col-sm-12 acc_heading">
+                <div class="col-sm-8">
+                    <h1 class="line_head">Offer List Detail View</h1>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bottom_btn text-right">
+                        <button type="button" class="btn btn_black" [routerLink]="['/home/work_area/admin/dashboard/offer-stock']"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-demo profile_detail table-responsive">
+
+            <div class="Personal_details">
+                <div class="p_details"><span>Offer Details</span></div>
+                <div class="row user_rows">
+                    <div class="col-sm-6">
+                        <span class="detail_head">Order Number : </span>
+                        <span class="detail_para">{{orderId ? 'ORD-' + utilService.getNumberIn4Digit(orderId) : '0'}}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="detail_head">Name : </span>
+                        <span class="detail_para">{{user.firstName ? user.firstName : '-'}} {{user.lastName ? user.lastName : '-'}} </span>
+                    </div>
+                </div>
+                <div class="row user_rows">
+                    <div class="col-sm-6">
+                        <span class="detail_head">Email Address: </span>
+                        <span class="detail_para">{{user.email ? user.email : '-'}} </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="detail_head">Address: </span>
+                        <span class="detail_para">{{user.companyAddress ? user.companyAddress : '-'}} </span>
+                    </div>
+
+                </div>
+                <div class="row user_rows">
+                    <div class="col-sm-6">
+                        <span class="detail_head">Tel/Mobile : </span>
+                        <span class="detail_para">{{user.mobileNo ? user.mobileNo : '-'}} </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="detail_head">Order Date </span>
+                        <span class="detail_para">{{user.listOfOffer ? (user.listOfOffer[0] ? (user.listOfOffer[0].createdAt | date ): '-') : '-'}} </span>
+                    </div>
+                </div>
+                <div class="row user_rows">
+                    <div class="col-sm-6">
+                        <span class="detail_head">Order Statue </span>
+                        <span class="detail_para">{{user.orderStatus ? user.orderStatus : '-'}} </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row m_left20">
+                <div class="bottom_btn m_top20 text-right" *ngIf="user.orderStatus != 'Confirmed'">
+                    <button type="button" class="btn btn-primary" (click)="sendEmail()"> SEND MAIL</button>
+                    <button type="button" class="btn btn-success" *ngIf="listOfSelectedIds && listOfSelectedIds.length > 0" (click)="changeStockRequestStatus('accepted')">Accept</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="listOfSelectedIds && listOfSelectedIds.length > 0" (click)="changeStockRequestStatus('decline')">Decline</button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- .....................table view .............................................. -->
+        <div class="template-demo table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th *ngIf="user.orderStatus != 'Confirmed'">
+                            <div>
+                                <input type="checkbox" [(ngModel)]="isCheckAll" (change)="checkAllItem()" [(ngModel)]="isCheckAll" name="agree-term" id="chech{{i}}" class="agree-term" />
+                            </div>
+                        </th>
+                        <th>Sr no.</th>
+                        <th>Stock Type</th>
+                        <th>Offer Qty</th>
+                        <th>Offer Price</th>
+                        <th>Status</th>
+                        <!-- <th>Action</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let stock of user.listOfOffer;let i = index">
+                        <td *ngIf="user.orderStatus != 'Confirmed'">
+                            <div class="form-group">
+                                <input type="checkbox" (change)="singleCheck(stock.selected , stock.id)" [(ngModel)]="stock.selected" name="agree-term" id="chech{{i}}" class="agree-term" />
+                            </div>
+                        </td>
+                        <td>{{i + 1}}</td>
+                        <td>{{stock.otherDetail ? stock.otherDetail.detail : '-' }}
+                        </td>
+                        <td>{{stock.offerQty ? stock.offerQty : '0'}}</td>
+                        <td>{{stock.offer ? stock.offer : '0'}}</td>
+                        <!-- <td>{{stock.status ? stock.status : '0'}}</td> -->
+                        <td *ngIf="stock.status=='accepted'" ><span class="label label-success" style="background-color: green;">{{stock.status ? 'Accepted' : '0'}}</span></td>
+                        <td *ngIf="stock.status=='decline'" ><span class="label label-danger" style="background-color: red;">{{stock.status ? 'Declined' : '0'}}</span></td>
+                        <td *ngIf="stock.status=='Requested'"><span class="label label-primary">{{stock.status ? 'Requested' : '0'}}</span></td>
+                    </tr>
+                    <tr *ngIf="!user.listOfOffer || user.listOfOffer.length == 0">
+                        <td colspan="7">
+                            {{utilService.NO_RECORDS_FOUND}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

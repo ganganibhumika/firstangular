@@ -1,0 +1,188 @@
+<div class="mdc-layout-grid">
+    <div class="mdc-card">
+
+        <section class="mdc-card__primary col-md-12">
+            <h1 class="mdc-card__title mdc-card__title--large col-xs-12 col-sm-7">Manage Email Template</h1>
+
+            <div class="col-xs-8 col-sm-3 Search_btn">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="mailTemplateService.searchText" (ngModelChange)="mailTemplateService.getAllRecords()">
+                    <span class="input-group-addon">                     
+                <span class="fa fa-search"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 text-center Search_btn">
+                <button class="admin_add_btn" data-toggle="modal" data-target="#addmanager" (click)="mailTemplateService.resetModal()"> <i class="fa fa-plus" ></i> Add </button>
+            </div>
+        </section>
+
+        <div class="template-demo table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>Template Name </th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tmp of mailTemplateService.allRecords;let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{tmp.templateName}}</td>
+                        <td>
+                            <label class="switch">
+                <input type="checkbox" [(ngModel)]="tmp.status">
+                <span class="slider round"></span>
+              </label>
+                        </td>
+                        <td>
+                            <i class="fa fa-trash delete_btn" data-toggle="modal" (click)="mailTemplateService.idForRemove=tmp.id" data-target="#deletetemplate" title="Delete template"></i>
+                            <i class="fa fa-pencil edit_btn" (click)="mailTemplateService.getDataForEdit(tmp)" title="Edit template"></i>
+                            <i class="fa fa-eye view_btn" title="view stock" (click)="mailTemplateService.viewData(tmp)" data-toggle="modal" data-target="#previewmailtemplate"></i>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!mailTemplateService.allRecords || mailTemplateService.allRecords.length == 0">
+                        <td colspan="4">
+                            {{utilsService.NO_RECORDS_FOUND}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--add Modal -->
+<div class="modal fade" id="addmanager" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="error_div">
+                <button type="button" class="close" data-dismiss="modal" (click)="mailTemplateService.resetModal()">&times;</button>
+                <h4 class="modal-title delete_title">{{mailTemplateService.headerText}}</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <pre>
+      {{
+        mailTemplateService.mailTemplate | json
+      }}</pre> -->
+                <div>
+                    <div class="alert alert-danger" *ngIf="mailTemplateService.errors.length > 0">
+                        <a class="close" data-dismiss="alert" aria-label="close" (click)="mailTemplateService.resetError()">&times;</a>
+                        <ul *ngFor="let err of mailTemplateService.errors">
+                            <li>{{err}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="manager_status">Name :</div>
+                    <input type="text" [(ngModel)]="mailTemplateService.mailTemplate.templateName" class="form-input" name="Template Name" id="Template Name" placeholder="Your Template Name *" maxlength="30" [formControl]="mailTemplateService.form.controls['templateName']"
+                    />
+                    <small class="color-red" *ngIf="mailTemplateService.form.controls['templateName'].hasError('required') && mailTemplateService.form.controls['templateName'].touched">{{utilsService.validationService.TEMPLATE_NAME_REQUIRED}}</small>
+
+                </div>
+                <div class="form-group">
+                    <div class="manager_status">Description :</div>
+                    <!-- <pre>
+            {{mycontent}}
+          </pre> -->
+                    <div>
+                        <!-- <textarea name="editor1" id="editor1" rows="10" cols="80" [(ngModel)]="test">  </textarea> -->
+                        <ckeditor [(ngModel)]="mailTemplateService.mailTemplate.templateDescription" #myckeditor [config]="ckeConfig" debounce="500" (change)="onChange($event)" [formControl]="mailTemplateService.form.controls['templateDescription']">
+                        </ckeditor>
+                        <small class="color-red" *ngIf="mailTemplateService.form.controls['templateDescription'].hasError('required') && mailTemplateService.form.controls['templateDescription'].touched">{{utilsService.validationService.TEMPLATE_DESCRIPTION_REQUIRED}}</small>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="manager_status">Status :</div>
+                    <label class="switch">
+            <input type="checkbox" [(ngModel)]="mailTemplateService.mailTemplate.status" >
+            <span class="slider round"></span>
+          </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn setting_btn" (click)="mailTemplateService.saveOrEdit()" [disabled]="!mailTemplateService.form.valid">Submit</button>
+                <button type="button" class="btn close_btn" data-dismiss="modal" (click)="mailTemplateService.resetModal()">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- delete Modal -->
+<div class="modal fade" id="deletetemplate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+       
+      </div> -->
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="delete_sym">
+                    <i class="fa fa-trash"></i>
+                </div>
+                <div class="delete_title_main">
+                    <h3 class="modal-title delete_title">Are You Sure ?
+                    </h3>
+
+                    <span class="sub_title"> You Want To Delete Mail Template. </span>
+                </div>
+                <div class="row text-center m_top20">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="mailTemplateService.deleteTemplateById()">Delete</button>
+                    <button type="button" class="btn btn-default mleft_20" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="previewmailtemplate" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="panel-group box1">
+                    <header>
+
+                        <h5 class="mdc-card__title mdc-card__title--large">Preview Mail Template </h5>
+                    </header>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 panel">
+                        <div>
+                            <div class="form-group required preview_data">
+                                <label class=" col-xs-4 detail_head">Template Name :</label>
+                                <label class=" col-xs-8"> {{mailTemplateService.viewTemplateOb.templateName}}
+                </label>
+                            </div>
+
+
+                            <div class="form-group preview_data">
+                                <div class="col-xs-12">
+                                    <label class="detail_head">Description:</label>
+                                </div>
+                                <div class="col-xs-12 box preview_content" [innerHTML]="mailTemplateService.viewTemplateOb.templateDescription">
+                                    <!-- <p><strong>{{mailTemplateService.viewTemplateOb.templateDescription}}</strong></p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button class="btn btn-success">Submit</button> -->
+                <button class="btn close_btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

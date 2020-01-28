@@ -1,0 +1,99 @@
+<div class="mdc-layout-grid">
+    <div class="mdc-card">
+        <!-- <section class="mdc-card__primary col-md-12 text-center">
+            <h1 class="col-md-12 list_heading">Contact US</h1>
+            <h4 class="col-md-12 ">Feel Free To Contact US</h4>
+        </section> -->
+        <section class=" col-md-12 title_sec">
+            <h1 class="mdc-card__title  col-md-12">Contact US </h1>
+        </section>
+        <div class="template-demo">
+
+            <!-- ...........form design ............. -->
+            <div class="contact_form_container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="contact_sec">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="detail_head" for="name">
+
+                           Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Enter name" [(ngModel)]="contactDetail.name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="detail_head" for="email">
+                            Email Address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email *" [(ngModel)]="contactDetail.email" [formControl]="contactFormValidation.controls['email']" />
+                                        <small class="color-red" *ngIf="contactFormValidation.controls['email'].hasError('required') && contactFormValidation.controls['email'].touched">{{utilService.validationService.EMAIL_IS_REQUIRD}}</small>
+                                        <small class="color-red" *ngIf="!contactFormValidation.controls['email'].hasError('required') && !contactFormValidation.controls['email'].valid && contactFormValidation.controls['email'].touched">{{utilService.validationService.VALID_EMAIL}}</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="detail_head" for="subject">
+                            Subject</label>
+                                        <input type="text" class="form-control" placeholder="Enter subject" [(ngModel)]="contactDetail.subject" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="detail_head" for="name">
+                            Message</label>
+                                        <textarea name="message" id="message" class="form-control" rows="9" cols="25" placeholder="Message *" [(ngModel)]="contactDetail.message" [formControl]="contactFormValidation.controls['message']"></textarea>
+                                        <small class="color-red" *ngIf="contactFormValidation.controls['message'].hasError('required') && contactFormValidation.controls['message'].touched">Message is required.</small>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="setting_btn pull-right" id="btnContactUs" (click)="saveContactDetail()" [disabled]="!contactFormValidation.valid">
+                        Send Message</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                        <div class="globe_icon">
+                            <i class="fa fa-globe"></i> &nbsp;&nbsp;
+                            <span class="contact_heading">Our office</span>
+                        </div>
+
+                        <div class="address_details">
+                            <h3>
+                                <label class="detail_head">Country : </label>
+                                <div class="detail_para">
+                                    {{utilService.siteSettingDetail.country ? utilService.siteSettingDetail.country : '-'}}
+                                </div>
+                            </h3>
+                            <span>
+                                          <label class="detail_head">Address : </label>
+                                           <div class="detail_para"> 
+                                         {{utilService.siteSettingDetail.addressLine1 ? utilService.siteSettingDetail.addressLine1 : ''}}
+                                         {{utilService.siteSettingDetail.addressLine2 ? utilService.siteSettingDetail.addressLine2 : ''}}
+                                         {{utilService.siteSettingDetail.addressLine3 ? utilService.siteSettingDetail.addressLine3 : ''}}
+                                     </div>
+                                        </span>
+                            <span>
+                                         <label class="detail_head">Phone : </label>
+                                   <div class="detail_para"> {{utilService.siteSettingDetail.mobileNo ? utilService.siteSettingDetail.mobileNo : '-'}}
+                                   </div></span>
+                            <span>
+                                         <label class="detail_head">Email id : </label>
+                                        <div class="detail_para"> 
+                                            <a class="loginhere-link">{{utilService.siteSettingDetail.siteEmail ? utilService.siteSettingDetail.siteEmail : '-'}}</a>
+                                        </div>
+                                    </span>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

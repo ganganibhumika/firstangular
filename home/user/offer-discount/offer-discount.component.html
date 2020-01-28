@@ -1,0 +1,99 @@
+<div class="container-fluid ">
+    <div class="col-sm-5 col-xs-12 col-md-5">
+        <section class="mdc-card__primary title_sec">
+            <h1 class="mdc-card__title  col-md-12 col-lg-12">YOUR STOCK LIST OFFERS </h1>
+        </section>
+        <!-- <div class="template-demo "> -->
+            <div class="template-demo table-responsive">
+            
+            <table class="table table-striped user_tbls">
+                <thead class="stock_table">
+                    <tr>
+                        <th>Stock List</th>
+                        <th>Offer</th>
+                        <th>Currency</th>
+                        <th>DateTime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let stock of listOfStockList">
+
+                        <td>{{stock.stock_item_id ? stock.stock_item_id.detail : '-'}}</td>
+                        <td>{{stock.offerQty ? stock.offerQty : '-'}}</td>
+                        <td>
+                            GBP
+                        </td>
+                        <td>
+                            {{stock.createdAt ? (stock.createdAt | date: 'dd/MM/yyyy hh:mm a') : '-'}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="listOfStockList.length == 0">
+                        <td colspan="4">
+                            <h4>{{utilService.validationService.MESSAGE_FOR_NO_RECORDS_FOUND}}</h4>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+           <div class="card-footer pagination_sec" *ngIf="pagination.totalRecords > pagination.paginationViewCondition">
+                <div class="pull-left">
+                    <div class="record">
+                        <div class="pull-left page_dropdown ng_select_box">
+                            <ng-select class="form-control1" [clearable]="false" [items]="pagination.goToPageArray" bindLabel="name" bindValue="id" placeholder="Select page" [(ngModel)]="pagination.selectPage" (change)="goToPageFun()">
+                            </ng-select>
+                        </div>
+                        <div class="pull-left record_num_1">Total : {{pagination.totalRecords}}</div>
+
+                    </div>
+                </div>
+                <div class="paginations_list user_pagination">
+                    <ul>
+                        <li class="record ng_select_box" *ngIf="pagination.noOfRecordPerPageArray.length > 0">
+                            <ng-select class="form-control1" [clearable]="false" [items]="pagination.noOfRecordPerPageArray" bindLabel="name" bindValue="id" placeholder="Select No of Records" [(ngModel)]="pagination.perPage" (change)="selectPerPage(pagination.perPage)">
+                            </ng-select>
+                        </li>
+                        <li class="prev">
+                            <button class="btn btn-primary" *ngIf="pagination.selectPage != 0" (click)="getPreviousData()">
+                  <i class="fa fa-arrow-left" aria-hidden="true" ></i>
+                </button>
+                        </li>
+                        <li class="pagination-number"><a> {{+pagination.startPos + 1 }}-{{ +pagination.noOfRecordsPerPage + +pagination.startPos }}
+                   </a></li>
+                        <li class="next">
+                            <button class="btn btn-primary" (click)="getNextData()" *ngIf="!pagination.lastAchive">
+                                    <i class="fa fa-arrow-right" aria-hidden="true" ></i>
+                                </button>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        
+    </div>
+    </div>
+
+
+    <div class="col-sm-7 col-md-7 col-xs-12">
+        <!-- <div class="mdc-layout-grid"> -->
+        <div class="mdc-card" style="background: transparent; text-align: center;">
+            <section class="mdc-card__primary col-md-12 col-lg-12">
+                <div class="user-dashboard_heading"> WELCOME TO WHOLESALE INEEDMOBILE</div>
+            </section>
+            <div class="row">
+                <div class="col-md-12 right_content">
+                    <div class="sub_right_content col-md-6 col-lg-6">
+                        <div class="title_1">We are Top Rated Sellers</div>
+                        <div class="title_2">To make doing business easy</div>
+                        <div class="title_3">Wholesale ineed mobile is largest online B2B marketplace, connecting buyers with suppliers.
+                             With 60% market share of the online B2B Classified space in UK, 
+                             the channel focuses on providing a platform to Small & Medium Enterprises (SMEs), 
+                             large enterprises as well as individuals.</div>
+                    </div>
+                    <div class="col-md-5 stock_btn_sec" [routerLink]="['/home/work_area/user/dashboard/stock-list']"  (click)="navigateRoute()">
+                        <div class="form-submit stock_list_btn" > <i class="fa fa-list icon-md"></i> Stock list </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

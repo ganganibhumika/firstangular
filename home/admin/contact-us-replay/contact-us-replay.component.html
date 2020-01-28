@@ -1,0 +1,115 @@
+<!-- <div class="page-wrapper mdc-toolbar-fixed-adjust mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12"> -->
+<!-- <div class="content-wrapper"> -->
+<div class="mdc-layout-grid">
+    <!-- <div class="mdc-layout-grid__inner"> -->
+    <div class="mdc-card">
+        <section class="mdc-card__primary col-md-12">
+            <h1 class="mdc-card__title mdc-card__title--large col-xs-12 col-sm-6 col-md-3">Contact Us</h1>
+            <div class="col-xs-12 col-sm-6 col-md-3 pull-right search_box">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="pagination.searchText" (ngModelChange)="getAllRecords(pagination.searchText)">
+                    <span class="input-group-addon">                     
+                <span class="fa fa-search"></span>
+                    </span>
+                </div>
+            </div>
+        </section>
+        <div class="template-demo table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let replay of listOfReplay;let i=index;">
+                        <td>{{+pagination.startPos + (i+ 1)}}</td>
+                        <td>{{replay.name ? replay.name : '-'}}</td>
+                        <td>{{replay.email ? replay.email : '-'}}</td>
+                        <td>{{replay.subject ? replay.subject : '-'}}</td>
+                        <td>{{replay.message ? replay.message : '-'}}</td>
+                        <td>
+                            <i class="fa fa-trash delete_btn" data-toggle="modal" data-target="#deletemanager" title="Delete Manager" (click)="removeContactUs(replay.id)"></i>
+                        </td>
+                    </tr>
+                    <tr *ngIf="listOfReplay.length == 0">
+                        <td colspan="6">
+                            {{utilService.NO_RECORDS_FOUND}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pagination_sec" *ngIf="pagination.totalRecords > pagination.paginationViewCondition">
+            <div class="pull-left">
+                <div class="record">
+                    <div class="pull-left page_dropdown ng_select_box">
+                        <ng-select class="form-control2" [clearable]="false" [items]="pagination.goToPageArray" bindLabel="name" bindValue="id" placeholder="Select page" [(ngModel)]="pagination.selectPage" (change)="goToPageFun()">
+                        </ng-select>
+                    </div>
+                    <div class="pull-left record_num">Total : {{pagination.totalRecords}}</div>
+
+                </div>
+            </div>
+            <div class="paginations_list pull-right">
+                <ul>
+                    <li class="record ng_select_box" *ngIf="pagination.noOfRecordPerPageArray.length > 0">
+                        <ng-select class="form-control2" [clearable]="false" [items]="pagination.noOfRecordPerPageArray" bindLabel="name" bindValue="id" placeholder="Select No of Records" [(ngModel)]="pagination.perPage" (change)="selectPerPage(pagination.perPage)">
+                        </ng-select>
+                    </li>
+                    <li class="prev">
+                        <button class="btn btn-primary" [disabled]="pagination.selectPage == 0" (click)="getPreviousData()">
+                  <i class="fa fa-arrow-left" aria-hidden="true" ></i>
+                </button>
+                    </li>
+                    <li class="pagination-number"><a> {{+pagination.startPos + 1 }}-{{ +pagination.noOfRecordsPerPage + +pagination.startPos }}
+                   </a></li>
+                    <li class="next">
+                        <button class="btn btn-primary" (click)="getNextData()" [disabled]="pagination.lastAchive">
+                                    <i class="fa fa-arrow-right" aria-hidden="true" ></i>
+                                </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete Modal -->
+<div class="modal fade" id="deletemanager" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete_sym">
+                    <i class="fa fa-trash"></i>
+                </div>
+                <div class="delete_title_main">
+                    <h3 class="modal-title delete_title">Are You Sure ?
+                    </h3>
+
+                    <span class="sub_title"> You Want To Delete Contact Us.  </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteContactById()">
+          Delete
+        </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,158 @@
+<div class="mdc-layout-grid">
+    <!-- <div class="mdc-layout-grid__inner"> -->
+    <div class="mdc-card" *ngIf="!utilService.notFound">
+        <!-- <section class="mdc-card__primary col-md-12"> -->
+        <!-- <h1 class="mdc-card__title mdc-card__title--large col-md-9">User Preview - [{{user.firstName}}]</h1> -->
+        <!-- <div class="add_icon" title="Add Manager"> -->
+        <!-- <i class="fa fa-times pull-right" (click)="goToListPage()"></i> -->
+        <!-- </div> -->
+        <!-- </section> -->
+        <!-- .........................section start......................... -->
+
+        <div class="row mdc-card__account">
+            <div class="col-md-12 col-sm-12 acc_heading">
+                <div class="col-sm-8">
+                    <h1 class="line_head">My Account</h1>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bottom_btn text-right">
+
+                        <button type="button" class="btn btn_black" (click)="goToListPage()"><i class="fa fa-times"></i></button>
+
+                        <!-- <button type="button" class="btn btn-primary" (click)="isEdit"><i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;EDIT</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="template-demo profile_detail">
+            <div class="">
+                <div class="Personal_details">
+                    <div class="p_details"><span>Personal Details</span></div>
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">First Name : </span>
+                            <span class="detail_para"> {{user.firstName ? user.firstName : '-'}}</span> 
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="detail_head">Last Name : </span>
+                            <span class="detail_para"> {{user.lastName ? user.lastName : '-'}}</span>
+                        </div>
+                    </div>
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">Email Address: </span>
+                            <span class="detail_para"> {{user.email ? user.email : '-'}}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="detail_head">Tel/Mobile : </span>
+                            <span class="detail_para"> {{user.mobileNo ? user.mobileNo : '-'}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="company_details">
+
+                    <div class="p_details"><span>Company Details : </span></div>
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">Company: </span>
+                            <span class="detail_para"> {{user.companyName ? user.companyName : '-'}}</span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <span class="detail_head">Company Type: </span>
+                            <span class="detail_para"> {{user.companyType ? user.companyType : '-'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">Country : </span>
+                            <span class="detail_para"> {{user.country ? user.country : '-'}}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="detail_head">Currency : </span>
+                            <span class="detail_para"> {{user.currency ? user.currency : '-'}}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">Registration No. : </span>
+                            <span class="detail_para"> {{user.registartionNumber ? user.registartionNumber : '-'}}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="detail_head">VAT No. : </span>
+                            <span class="detail_para"> {{user.VATNumber ? user.VATNumber : '-'}}</span>
+                        </div>
+                    </div>
+                    <div class="row user_rows">
+                        <div class="col-sm-6">
+                            <span class="detail_head">Account Manager: </span>
+
+                            <span class="detail_para"> {{user.idOfAccountManager ?  (user.idOfAccountManager.managerName) : '-'}}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="detail_head">Company Address </span>
+                            <span class="detail_para"> {{user.companyAddress ? user.companyAddress : '-'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row user_rows" *ngIf="user.document && user.document.length > 0">
+                        <div class="col-sm-12">
+                            <span class="detail_head">Documents : </span>
+                            <div class="detail_para">
+
+                                <div class="col-sm-6 doc_detail" *ngFor="let doc of user.document">
+                                    <!-- <div class="doc_detail"> -->
+                                    <div class="doc_left_1" title="{{doc.fileName}}">{{doc.fileName}} </div>
+                                    <div class="doc_right_1">
+                                        <a> <i class="fa fa-trash remove_doc" data-toggle="modal" (click)="idForRemove=doc.id" data-target="#deleteDoc" title="Delete Document" ></i></a>
+                                        <i class="fa fa-download edit_btn" (click)="downloadDocument(doc)"></i>
+                                    </div>
+                                    <!-- </div> -->
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- delete Modal -->
+<div class="modal fade" id="deleteDoc" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="delete_sym">
+                    <i class="fa fa-trash"></i>
+                </div>
+                <div class="delete_title_main">
+                    <h3 class="modal-title delete_title">Are You Sure ?
+                    </h3>
+
+                    <span class="sub_title"> You Want To Delete Mail Template. </span>
+                </div>
+                <div class="row text-center m_top20">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeDocumentById(idForRemove)">Delete</button>
+                    <button type="button" class="btn btn-default mleft_20" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

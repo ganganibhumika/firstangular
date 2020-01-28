@@ -1,0 +1,88 @@
+<div class="mdc-layout-grid">
+    <div class="mdc-card">
+        <section class="mdc-card__primary col-md-12">
+            <h1 class="mdc-card__title mdc-card__title--large col-md-6">
+                Settings
+            </h1>
+        </section>
+        <section class="signup">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Upload Image</label>
+
+                        <div *ngIf="siteSettingDetail.logo && !imagePreviewSrc" class="preview_img">
+                            <img [src]="utilService.imageUrl+siteSettingDetail.logo" height="50px;" width="50px;" alt="Image not found."> </div>
+                        <div *ngIf="imagePreviewSrc" class="preview_img">
+                            <img src="{{imagePreviewSrc}}" alt="Image not found.">
+                        </div>
+                        <input type="file" class="form-control" id="image" accept="image/x-png,image/jpeg" (change)="imagePreview($event)">
+                        <small class="color-red" *ngIf="!imageOnly">Only image and png allowed.</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Site Name</label>
+                        <input type="text" class="form-input" name="siteName" id="First name" placeholder="Your website Name *" maxlength="80" [formControl]="settingValidation.controls['siteName']" [(ngModel)]="siteSettingDetail.siteName" />
+                        <small class="color-red" *ngIf="settingValidation.controls['siteName'].hasError('required') && settingValidation.controls['siteName'].touched">{{utilService.validationService.SITE_NAME_IS_REQUIRD}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Site Email</label>
+                        <input type="email" class="form-input" name="siteemail" id="siteemail" placeholder="Your site email *" maxlength="80" [(ngModel)]="siteSettingDetail.siteEmail" [formControl]="settingValidation.controls['siteEmail']" />
+                        <small class="color-red" *ngIf="settingValidation.controls['siteEmail'].hasError('required') && settingValidation.controls['siteEmail'].touched">{{utilService.validationService.EMAIL_IS_REQUIRD}}</small>
+                        <small class="color-red" *ngIf="!settingValidation.controls['siteEmail'].hasError('required') && !settingValidation.controls['siteEmail'].valid && settingValidation.controls['siteEmail'].touched">{{utilService.validationService.VALID_EMAIL}}</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Tel/Mobile</label>
+                        <input type="text" class="form-input" name="mobile" id="mobile" placeholder="Your Tel/Mobile *" maxlength="10" [formControl]="settingValidation.controls['mobileNo']" [(ngModel)]="siteSettingDetail.mobileNo" />
+                        <small class="color-red" *ngIf="settingValidation.controls['mobileNo'].hasError('required') && settingValidation.controls['mobileNo'].touched">{{utilService.validationService.MOBILE_NO_IS_REQUIRD}}</small>
+                        <small class="color-red" *ngIf="!settingValidation.controls['mobileNo'].hasError('required') && !settingValidation.controls['mobileNo'].valid && settingValidation.controls['mobileNo'].touched">{{utilService.validationService.VALID_MOBILE_NO}}</small>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Currency</label>
+                        <ng-select class="form-control1" [items]="utilService.arrayOfCurrency" bindLabel="name" bindValue="name" placeholder="Select currency *" [(ngModel)]="siteSettingDetail.currency" [formControl]="settingValidation.controls['currency']">
+                        </ng-select>
+                        <small class="color-red" *ngIf="settingValidation.controls['currency'].hasError('required') && settingValidation.controls['currency'].touched">{{utilService.validationService.CURRENCY_IS_REQUIRD}}</small>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Address</label>
+                        <input type="text" class="form-input" placeholder="Blog no , street" maxlength="80" [(ngModel)]="siteSettingDetail.addressLine1" />
+                        <br><br>
+                        <label class="detail_head">Address Line2</label>
+                        <input type="text" class="form-input" placeholder="Area" maxlength="80" [(ngModel)]="siteSettingDetail.addressLine2" />
+                        <br><br>
+                        <label class="detail_head">Address Line3</label>
+                        <input type="text" class="form-input" placeholder="City " maxlength="80" [(ngModel)]="siteSettingDetail.addressLine3" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Country</label>
+                        <ng-select class="form-control1" [items]="countryList" bindLabel="name" bindValue="name" placeholder="Select country" [(ngModel)]="siteSettingDetail.country">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="detail_head">Offer Discount</label>
+                        <input type="text" class="form-input" #itemRate (keypress)="utilService.validationService.getTextboxValue(itemRate,$event,$event.which,utilService.validationService.DISCOUNT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)" (ngModelChange)="utilService.validationService.checkgetText(itemRate,utilService.validationService.DISCOUNT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)"
+                            name="offer" id="offer" placeholder="Your Offer discount *" maxlength="80" [formControl]="settingValidation.controls['offerDiscount']" [(ngModel)]="siteSettingDetail.offerDiscount" maxlength="3" />
+                        <small class="color-red" *ngIf="settingValidation.controls['offerDiscount'].hasError('required') && settingValidation.controls['offerDiscount'].touched">{{utilService.validationService.OFFER_DISCOUNT_IS_REQUIRD}}</small>
+                        <small class="color-red" *ngIf="!settingValidation.controls['offerDiscount'].hasError('required') && !settingValidation.controls['offerDiscount'].valid && settingValidation.controls['offerDiscount'].touched">{{utilService.validationService.VAID_IS_OFFER_DISCOUNT}}</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="submit" name="submit" id="submit" class="setting_btn btn_register" value="Settings" (click)="saveSettings()" [disabled]="!settingValidation.valid" />
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

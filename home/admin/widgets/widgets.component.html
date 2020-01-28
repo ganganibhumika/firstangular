@@ -1,0 +1,35 @@
+<div class="mdc-layout-grid">
+   <div class="row dashboard-stats">
+                        <div class="col-md-4 col-sm-6">
+                            <section class="panel panel-box">
+                            <a [routerLink]="['/home/work_area/admin/dashboard/user-list']">
+                                <div class="panel-left panel-icon bg-danger">
+                                    <i class="fa fa-user text-white icon-md"></i>
+                                    
+                                </div>
+                                <div class="panel-right panel-icon bg-reverse">
+                                    <p class="size-h1 no-margin countdown_first">{{response ? response.totalUser : '0'}}</p>
+                                    <p class="text-muted no-margin text"><span>Total User</span></p>
+                                </div>
+                        </a>
+                            </section>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <section class="panel panel-box">
+                                <a [routerLink]="['/home/work_area/admin/dashboard/offer-stock']">
+                                <div class="panel-left panel-icon bg-success">
+                                  <i class="fa fa-table text-white icon-md"></i>
+                                    
+                                </div>
+                                <div class="panel-right panel-icon bg-reverse">
+                                    <p class="size-h1 no-margin countdown_second">{{response ? response.totalOffer : '0'}}</p>
+                                    <p class="text-muted no-margin text"><span>Stock Request</span></p>
+                                </div>
+                            </a>
+                            </section>
+                            
+                        </div>
+                           
+                    </div> 
+  </div>
+

@@ -1,0 +1,91 @@
+<div class="body-wrapper">
+    <!-- partial -->
+    <!-- partial:partials/_navbar.html -->
+    <header class="mdc-toolbar-user mdc-elevation--z4 mdc-toolbar--fixed">
+        <div class="mdc-toolbar__row">
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-start ">
+                <a [routerLink]="['/home/work_area/user/dashboard']" class="user_logo">
+                    <img src="{{utilService.SITE_LOGO}}" alt="Not Found"></a>
+                <!-- <img src="Not Found" alt="logo"></a> -->
+                <span class="mdc-toolbar__input">
+            <div class="mdc-text-field">
+             
+            </div>
+          </span>
+            </section>
+            <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+                <div class="mdc-menu-anchor">
+                    <ul class="user_menu ">
+                        <!-- <li>Auction</li> -->
+                        <li>Welcome , {{userName}}</li>
+
+                        <div id="mySidenav" class="sidenav">
+                            <a class="closebtn" (click)="closeNav()">&times;</a>
+                            <li [routerLink]="['/home/work_area/user/dashboard/offer-list']">
+                                <!-- <i class="fa fa-cog"></i> -->
+                                <a (click)="closeNav()">Home</a>
+                            </li>
+                            <li [routerLink]="['/home/work_area/user/dashboard/stock-list']">
+                                <!-- <i class="fa fa-bars"></i> -->
+                                <a (click)="closeNav()">Stock List</a>
+                            </li>
+                            <li [routerLink]="['/home/work_area/user/dashboard/user-account']">
+                                <!-- <i class="fa fa-cog"></i> -->
+                                <a (click)="closeNav()">My Account</a>
+                            </li>
+                            <!-- <li [routerLink]="['/home/work_area/user/dashboard/contact-us']"> -->
+                            <li >
+                                <!-- <i class="fa fa-cog"></i> -->
+                                <a (click)="closeNav()" href="mailto:wholesale@ineedmobile.com" >Contact Us</a>
+                            </li>
+                            <li [routerLink]="['/home/work_area/user/dashboard/change-password']">
+                                <!-- <i class="fa fa-cog"></i> -->
+                                <a (click)="closeNav()">Change Password</a>
+                            </li>
+                            <li (click)="logout()">
+                                <!-- <i class="fa fa-download"></i> -->
+                                <a (click)="closeNav()">Logout</a>
+                            </li>
+                        </div>
+
+                        <li class="dropdown" data-toggle="dropdown">
+                            <a class="toggle dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bars" (click)="openNav()"></i>
+                                <!-- <i class="fa fa-times"></i> -->
+                            </a>
+                            <!--   <div class="dropdown-menu" style="left:-145px" >
+                <ul class="submenu-ul">
+                  <li [routerLink]="['/home/work_area/user/dashboard/stock-list']">
+                    <i class="fa fa-bars"></i>
+                    <a>Stock List</a>
+                  </li>
+                  <li [routerLink]="['/home/work_area/user/dashboard/user-account']">
+                    <i class="fa fa-cog"></i>
+                    <a>My Account</a>
+                  </li>
+                   <li [routerLink]="['/home/work_area/user/dashboard/contact-us']">
+                    <i class="fa fa-cog"></i>
+                    <a>Contact</a>
+                  </li>
+                  <li (click)="logout()">
+                    <i class="fa fa-download"></i>
+                    <a>Logout</a>
+                  </li>
+                </ul>
+            </div> -->
+                            <!-- </div> -->
+                        </li>
+                        <!-- <li></li> -->
+                    </ul>
+                </div>
+
+            </section>
+        </div>
+    </header>
+
+    <div class="page-wrapper mdc-toolbar-fixed-adjust">
+        <main class="content-wrapper content-wrapper-user">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

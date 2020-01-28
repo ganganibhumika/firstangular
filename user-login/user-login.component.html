@@ -1,0 +1,41 @@
+<div class='bg-image'></div>
+<div class="main">
+
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                        <h2 class="form-title">Sign In</h2>
+
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Email *"  maxlength="30"
+                            [(ngModel)]="loginUserDetail.username" [formControl]="loginValidtionFrom.controls['username']" (keyup.enter)="userLogin()"/>
+                            <small class="color-red" *ngIf="loginValidtionFrom.controls['username'].hasError('required') && loginValidtionFrom.controls['username'].touched">{{utilService.validationService.USER_NAME_IS_REQUIRED}}</small>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password" id="password" placeholder="Password *" maxlength="20"
+                            [(ngModel)]="loginUserDetail.password" [formControl]="loginValidtionFrom.controls['password']" (keyup.enter)="userLogin()"/>
+                            <small class="color-red" *ngIf="loginValidtionFrom.controls['password'].hasError('required') && loginValidtionFrom.controls['password'].touched">{{utilService.validationService.PASSWORD_IS_REQUIRED}}</small>
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <input  type="submit" name="submit" id="submit" class="form-submit" value="Sign in" 
+                            [disabled]="!loginValidtionFrom.valid" (keyup.enter)="userLogin()" (click)="userLogin()"
+                            />
+                        </div>
+                    <p class="loginhere">
+                         <span class="login_spec"> <i class="fa fa-user"></i> </span> 
+                        
+                        <a class="loginhere-link" [routerLink]="['/home/work_area/reset-password']">Reset Password</a>
+                        <span class="login_spec"> | </span>  
+                              Don't have an account ? 
+                     <a [routerLink]="['/home/work_area/register']" class="loginhere-link">Create New Account</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    

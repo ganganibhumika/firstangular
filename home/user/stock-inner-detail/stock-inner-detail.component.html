@@ -1,0 +1,132 @@
+<div class="mdc-layout-grid">
+    <div class="mdc-card">
+        <section class=" col-md-12 title_sec">
+            <h1 class="mdc-card__title  col-md-12">Stock List Details</h1>
+        </section>
+
+        <div class="bottom_btn m_top20 text-center">
+            <div class="form-group col-md-3 filter_stock ng_select_box">
+                <label class="control-label "> Model   : &nbsp;&nbsp;&nbsp; </label>
+                <ng-select class="form-control2" [items]="listOfModels" bindLabel="name" bindValue="name" placeholder="Select Model" [(ngModel)]="filterByModel" (change)="getAllStockDetail(true)"> </ng-select>
+            </div>
+            <div class="form-group col-md-3 filter_stock ng_select_box">
+                <label class="control-label "> Grade   : &nbsp;&nbsp;&nbsp;</label>
+                <ng-select class="form-control2" [items]="listOfGrade" bindLabel="name" bindValue="name" placeholder="Select Grade" [(ngModel)]="filterByGrade" (change)="getAllStockDetail(true)">
+                </ng-select>
+            </div>
+            <div class="form-group col-md-3 filter_stock ng_select_box">
+                <label class="control-label "> Network : </label>
+                <ng-select class="form-control2" [items]="listOfNetwork" bindLabel="network_name" bindValue="network_name" placeholder="Select Network" [(ngModel)]="filterByNetwork" (change)="getAllStockDetail(true)">
+                </ng-select>
+            </div>
+            <div class="col-xs-8 col-sm-3 Search_btn">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText" (keyup.enter)="getAllStockDetail(true)" (ngModelChange)="checkIsEmpty()">
+                    <span class="input-group-addon">                     
+                <span class="fa fa-search" (click)="getAllStockDetail(true)"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="template-demo table-responsive">
+            <table class="table user_tbls stocklist_tbl stocklist_tbl_width">
+                <thead>
+                    <tr class="stocklist_row">
+                        <th *ngFor="let th of allTH">
+                            <span (click)="getAllStockDetail(th.value  ? true : false , th.value )">
+                         {{th.name}}
+                         <!-- <pre>
+                             {{th | json}}
+                         </pre> -->
+                        </span>
+                            <a *ngIf="th.value && pagination.sortColumn == th.value"><i class="{{pagination.className}}"></i></a>
+                            <!-- <i class="fa fa-sort-amount-desc" *ngIf="pagination.sortColumn == th.keyName"></i> -->
+                            <!-- <a *ngIf="th.value" [attr.disabled]="!pagination.sortColumn == th.value && pagination.sortBy == 'desc'"><i class="fa fa-sort-amount-desc"></i></a>
+                            <a *ngIf="th.value" [attr.disabled]="!pagination.sortColumn == th.value && pagination.sortBy == 'asc'"><i class="fa fa-sort-amount-asc" ></i></a> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="stocklist_data">
+                    <tr *ngFor="let stock of listOfStockList;let i =index">
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.menufacturingname) ? '-' :stock.menufacturingname }}</td>
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.detail) ? '-' : stock.detail}}</td>
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.grade) ? '-' : stock.grade }}</td>
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.qty) ? '-' : stock.qty}}</td>
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.sale_price) ? 0 : stock.sale_price}}</td>
+                        <td class="ng_select_box">
+                            {{this.utilService.siteSettingDetail ? (this.utilService.siteSettingDetail.currency ? this.utilService.siteSettingDetail.currency : '-') : '-'}}
+                            <!-- <ng-select class="form-control1 user-input" [items]="utilService.arrayOfCurrency" bindLabel="name" bindValue="name" placeholder="currency" [(ngModel)]="currency">
+                            </ng-select> -->
+                        </td>
+                        <td>{{utilService.isNullUndefinedOrBlank(stock.network_name) ? '-' : stock.network_name}}</td>
+                        <td>
+                            <input type="text" class="form-input user-input" #sale_price (keypress)="utilService.validationService.getTextboxValue(sale_price,$event,$event.which,utilService.validationService.EIGHT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)" (ngModelChange)="utilService.validationService.checkgetText(sale_price,utilService.validationService.EIGHT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)"
+                                [disabled]="!stock.sale_price" [(ngModel)]="stock.offerQty" (blur)="checkForQtyAndAdd(stock , i)">
+                            <small class="color-red" *ngIf="stock.qtyError">Qty offer must be less than qty in stock</small>
+                        </td>
+                        <td>
+                            <input type="text" class="form-input user-input" #offer_price (keypress)="utilService.validationService.getTextboxValue(offer_price,$event,$event.which,utilService.validationService.EIGHT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)" (ngModelChange)="utilService.validationService.checkgetText(offer_price,utilService.validationService.EIGHT_DIGIT,utilService.validationService.AMOUNTPOINTRIGHT)"
+                                [disabled]="!stock.sale_price" [(ngModel)]="stock.offerPrice" (blur)="checkForQtyAndAdd(stock , i)">
+                            <small class="color-red" *ngIf="stock.offerError">Offer price can't less {{stock.offerPriceCal}}</small>
+                        </td>
+
+                    </tr>
+                    <tr *ngIf="listOfStockList.length == 0">
+                        <td colspan="10">
+                            <h4>{{utilService.validationService.MESSAGE_FOR_NO_RECORDS_FOUND}}</h4>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <!-- <div class="card-footer pagination_sec" *ngIf="pagination.totalRecords > pagination.paginationViewCondition">
+                <div class="pull-left">
+                    <div class="record">
+                        <div class="pull-left page_dropdown ng_select_box">
+                            <ng-select class="form-control1" [clearable]="false" [items]="pagination.goToPageArray" bindLabel="name" bindValue="id" placeholder="Select page" [(ngModel)]="pagination.selectPage" (change)="goToPageFun()">
+                            </ng-select>
+                        </div>
+                        <div class="pull-left record_num">Total : {{pagination.totalRecords}}</div>
+
+                    </div>
+                </div>
+                <div class="paginations_list pull-right">
+                    <ul>
+                        <li class="record ng_select_box" *ngIf="pagination.noOfRecordPerPageArray.length > 0">
+                            <ng-select class="form-control1" [clearable]="false" [items]="pagination.noOfRecordPerPageArray" bindLabel="name" bindValue="id" placeholder="Select No of Records" [(ngModel)]="pagination.perPage" (change)="selectPerPage(pagination.perPage)">
+                            </ng-select>
+                        </li>
+                        <li class="prev">
+                            <button class="btn btn-primary" *ngIf="pagination.selectPage != 0" (click)="getPreviousData()">
+                  <i class="fa fa-arrow-left" aria-hidden="true" ></i>
+                </button>
+                        </li>
+                        <li class="pagination-number"><a> {{+pagination.startPos + 1 }}-{{ +pagination.noOfRecordsPerPage + +pagination.startPos }}
+                   </a></li>
+                        <li class="next">
+                            <button class="btn btn-primary" (click)="getNextData()" *ngIf="!pagination.lastAchive">
+                                    <i class="fa fa-arrow-right" aria-hidden="true" ></i>
+                                </button>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="bottom_btn m_top20 text-center">
+            <button type="button" class="btn btn-primary" [disabled]="makeErrorButtonDisable || arrayForMakeOffer.length <= 0" (click)="saveOfferForLater()">
+        <i class="fa fa-floppy-o"></i> SAVE FOR LETTER</button>
+            <button type="button" class="btn btn-success" [disabled]="makeErrorButtonDisable || arrayForMakeOffer.length <= 0" (click)="makeOffer()">
+        <i class="fa fa-gbp"></i> MAKE AN OFFER</button>
+            <button type="button" class="btn btn-secondary" (click)="downloadStockList()">
+        <i class="fa fa-download"></i> DOWNLOAD THIS STOCK LIST</button>
+            <button type="button" class="btn btn-primary" (click)="downloadOffer()">
+        <i class="fa fa-download"></i> DOWNLOAD OFFER</button>
+            <!-- <button type="button" class="btn btn-secondary">
+        <i class="fa fa-paper-plane"></i> SEND REQUEST</button> -->
+
+        </div>
+    </div>
